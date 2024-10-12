@@ -1,4 +1,4 @@
-{	
+{
 	"Postgres": {
 		"password": "Put your password here",
 		"user": "postgres",
@@ -15,13 +15,11 @@
 	"DEBUG": false,
 	"API": {
 		"port": 5001,
-        	"authKey": "forsen"
+		"authKey": "forsen"
 	},
 	"WS": {
 		"port": 9100
 	},
-	"Admins": [
-		"88492428",
-		"475748597"
-	]
+	"Admins": ["88492428", "475748597"],
+	"BatchSize": 100
 }
