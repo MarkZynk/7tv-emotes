@@ -22,7 +22,7 @@ async function handleChannelEmotes(req: Request, res: Response) {
 				message: 'Invalid limit parameter',
 			});
 		}
-
+    
 		const order = req.query.order as string;
 		if (order && !['asc', 'desc'].includes(order.toLowerCase())) {
 			return res.status(400).json({

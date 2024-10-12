@@ -9,26 +9,29 @@ import { WebsocketServer } from './manager/WebSocketManager.js';
 import { ChannelEmoteManager } from './manager/ChannelEmoteManager.js';
 import { Cronjob } from './utility/Cronjob.js';
 import { IVR } from './services/IVR.js';
+import { EmoteHandler } from './handler/EmoteHandler.js';
+import { GlobalClasses } from './types/types.js';
 import { GetChannelsInfo } from './services/SevenTV.js';
 import { EventAPI } from './services/EventAPI.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const configPath = path.resolve(__dirname, 'config.json');
 
-// @ts-ignore
-global.Bot = {};
-// @ts-ignore
+let Bot = global.Bot = {} as GlobalClasses;
+
+// @ts-expect-error CBA to fix top level await in tsconfig
 Bot.Config = JSON.parse(await fs.readFile(configPath, 'utf-8'));
 Bot.Logger = Logger.New();
 Bot.Twitch = new ChatClient();
 Bot.Redis = RedisClient.New();
 Bot.WS = new WebsocketServer(Bot.Config.WS.port);
 Bot.Cronjob = Cronjob.New();
+Bot.EmoteHandler = EmoteHandler.New();
 Bot.EventAPI = EventAPI.New();
 
 (async () => {
 	await Postgres.Setup();
-	// @ts-ignore
+
 	Bot.SQL = Postgres.New();
 	await Bot.SQL.CreateTables();
 

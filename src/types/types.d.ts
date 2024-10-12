@@ -22,6 +22,7 @@ export type Config = {
 		port: number;
 	};
 	Admins: string[];
+	BatchSize: number;
 };
 
 export type NewEmote = {
@@ -39,3 +40,19 @@ export type UpdateEmote = {
 	channelId: string;
 	channelName: string;
 };
+
+export type IChannels = {
+	count: number;
+};
+
+export interface GlobalClasses {
+	Config: Config;
+	Twitch: import('../services/TwitchClient').ChatClient;
+	SQL: import('../database/Postgres').Postgres;
+	Redis: import('../database/Redis').RedisClient;
+	Logger: import('./utils/Logger').Logger;
+  EventAPI: import('../services/EventAPI').EventAPI;
+	WS: import('./services/Websocket').Websocket;
+	Cronjob: import('../utility/Cronjob').Cronjob;
+	EmoteHandler: import('../handler/EmoteHandler').EmoteHandler;
+}
