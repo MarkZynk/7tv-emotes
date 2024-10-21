@@ -121,7 +121,7 @@ const channels = async () => {
 
 const emoteSets = async () => {
 	try {
-		const ids = (await client.query('SELECT current_stv_set FROM channels')).rows;
+		const ids = (await client.query('SELECT current_stv_set FROM channels')).rows.filter(e => e.current_stv_set);
 
 		const batches = splitArray(ids, 200);
 
