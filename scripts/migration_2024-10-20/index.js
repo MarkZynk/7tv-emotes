@@ -27,7 +27,9 @@ const emotes = async () => {
 	try {
 		const ids = (await client.query('SELECT emote_id FROM emotes')).rows;
 
-		const batches = splitArray(ids, 200);
+		const filtered = ids.filter((e) => /^[a-f\d]{24}$/i.test(e.emote_id));
+
+		const batches = splitArray(filtered, 200);
 
 		console.log(`Starting emotes migration with ${ids.length} entries, split into ${batches.length} batches`);
 
@@ -121,7 +123,7 @@ const channels = async () => {
 
 const emoteSets = async () => {
 	try {
-		const ids = (await client.query('SELECT current_stv_set FROM channels')).rows.filter(e => e.current_stv_set);
+		const ids = (await client.query('SELECT current_stv_set FROM channels')).rows.filter((e) => e.current_stv_set);
 
 		const batches = splitArray(ids, 200);
 
