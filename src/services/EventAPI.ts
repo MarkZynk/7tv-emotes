@@ -119,8 +119,10 @@ export class EventAPI {
 	async handleDispatch(data: DispatchData) {
 		switch (data.type) {
 			case 'emote_set.update': {
+				const updateType = data.body.updated[0]?.key;
+				if (updateType === 'capacity') return
 				const stvId = data.body.id;
-				const channel = await Bot.SQL.Query(`SELECT twitch_id FROM channels WHERE current_stv_set = $1`, [stvId]);
+				const channel = await Bot.SQL.Query(`SELECT twitch_id, twitch_username FROM channels WHERE current_stv_set = $1`, [stvId]);
 				const login = channel.rows[0].twitch_username;
 				const id = channel.rows[0].twitch_id;
 
